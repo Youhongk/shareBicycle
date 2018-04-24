@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gduf.sbcms.dao.BicycleMapper" >
+ 
+  <resultMap id="BaseResultMap" type="com.gduf.sbcms.entity.Bicycle" >
+    <id column="bicycle_id" property="bicycleId" jdbcType="INTEGER" />
+    <result column="bicycle_status" property="bicycleStatus" jdbcType="INTEGER" />
+    <result column="coordinates" property="coordinates" jdbcType="VARCHAR" />
+    <result column="regional" property="regional" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bicycle_id, bicycle_status, coordinates, regional
+  </sql>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="com.gduf.sbcms.entity.Bicycle" >
+    select 
+    <include refid="Base_Column_List" />
+    from bicycle
+    where 1=1
+      <if test="bicycleId != null" >
+       and bicycle_id =  #{bicycleId,jdbcType=INTEGER}
+      </if>
+      <if test="bicycleStatus != null" >
+       and bicycle_status =  #{bicycleStatus,jdbcType=INTEGER}
+      </if>
+      <if test="coordinates != null" >
+       and coordinates =  #{coordinates,jdbcType=VARCHAR}
+      </if>
+      <if test="regional != null" >
+       and regional = #{regional,jdbcType=VARCHAR}
+      </if>
+  </select> 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bicycle
+    where bicycle_id = #{bicycleId,jdbcType=INTEGER}
+  </select>
+  <select id="getBicycleByStatus" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from bicycle where bicycle_status in (${pks}) 	
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bicycle
+    where bicycle_id = #{bicycleId,jdbcType=INTEGER}
+  </delete>
+  
+
+ <insert id="insert" parameterType="com.gduf.sbcms.entity.Bicycle" >
+    insert into bicycle (bicycle_id, bicycle_status, coordinates, 
+      regional)
+    values (#{bicycleId,jdbcType=INTEGER}, #{bicycleStatus,jdbcType=INTEGER}, #{coordinates,jdbcType=VARCHAR}, 
+      #{regional,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gduf.sbcms.entity.Bicycle" >
+    insert into bicycle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bicycleId != null" >
+        bicycle_id,
+      </if>
+      <if test="bicycleStatus != null" >
+        bicycle_status,
+      </if>
+      <if test="coordinates != null" >
+        coordinates,
+      </if>
+      <if test="regional != null" >
+        regional,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bicycleId != null" >
+        #{bicycleId,jdbcType=INTEGER},
+      </if>
+      <if test="bicycleStatus != null" >
+        #{bicycleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="coordinates != null" >
+        #{coordinates,jdbcType=VARCHAR},
+      </if>
+      <if test="regional != null" >
+        #{regional,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+ 
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.gduf.sbcms.entity.Bicycle" >
+    update bicycle
+    <set >
+      <if test="bicycleStatus != null" >
+        bicycle_status = #{bicycleStatus,jdbcType=INTEGER},
+      </if>
+      <if test="coordinates != null" >
+        coordinates = #{coordinates,jdbcType=VARCHAR},
+      </if>
+      <if test="regional != null" >
+        regional = #{regional,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bicycle_id = #{bicycleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gduf.sbcms.entity.Bicycle" >
+    update bicycle
+    set bicycle_status = #{bicycleStatus,jdbcType=INTEGER},
+      coordinates = #{coordinates,jdbcType=VARCHAR},
+      regional = #{regional,jdbcType=VARCHAR}
+    where bicycle_id = #{bicycleId,jdbcType=INTEGER}
+  </update>
+  
+   <update id="updateBatch">
+	    update bicycle 
+	    set  bicycle_status=${bicycle.bicycleStatus} , regional=#{bicycle.regional} ,coordinates=#{bicycle.coordinates} 
+	    where bicycle_id in (${ids}) 
+	 </update>
+</mapper>

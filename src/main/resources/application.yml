@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/db_sbcms?useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: admin
+  freemarker:    
+    cache: false
+      
+mybatis:
+  type-aliases-package: com.gduf.sbcms.entity
+  mapper-locations: classpath:mapper/*.xml
+   
+   

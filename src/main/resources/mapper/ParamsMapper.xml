@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gduf.sbcms.dao.ParamsMapper">
+  <resultMap id="BaseResultMap" type="com.gduf.sbcms.entity.Params">
+    <id column="paramid" jdbcType="INTEGER" property="paramid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="pkey" jdbcType="CHAR" property="pkey" />
+    <result column="pvalue" jdbcType="VARCHAR" property="pvalue" />
+    <result column="meno" jdbcType="VARCHAR" property="meno" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    paramid, pname, pkey, pvalue, meno
+  </sql>
+  <select id="selectByExample" parameterType="com.gduf.sbcms.entity.ParamsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from params
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from params
+    where paramid = #{paramid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPname" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from params
+    where pname = #{paramName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from params
+    where paramid = #{paramid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gduf.sbcms.entity.ParamsExample">
+    delete from params
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gduf.sbcms.entity.Params">
+    insert into params (paramid, pname, pkey, 
+      pvalue, meno)
+    values (#{paramid,jdbcType=INTEGER}, #{pname,jdbcType=VARCHAR}, #{pkey,jdbcType=CHAR}, 
+      #{pvalue,jdbcType=VARCHAR}, #{meno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gduf.sbcms.entity.Params">
+    insert into params
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="paramid != null">
+        paramid,
+      </if>
+      <if test="pname != null">
+        pname,
+      </if>
+      <if test="pkey != null">
+        pkey,
+      </if>
+      <if test="pvalue != null">
+        pvalue,
+      </if>
+      <if test="meno != null">
+        meno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="paramid != null">
+        #{paramid,jdbcType=INTEGER},
+      </if>
+      <if test="pname != null">
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="pkey != null">
+        #{pkey,jdbcType=CHAR},
+      </if>
+      <if test="pvalue != null">
+        #{pvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="meno != null">
+        #{meno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gduf.sbcms.entity.ParamsExample" resultType="java.lang.Integer">
+    select count(*) from params
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update params
+    <set>
+      <if test="record.paramid != null">
+        paramid = #{record.paramid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pname != null">
+        pname = #{record.pname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkey != null">
+        pkey = #{record.pkey,jdbcType=CHAR},
+      </if>
+      <if test="record.pvalue != null">
+        pvalue = #{record.pvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meno != null">
+        meno = #{record.meno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update params
+    set paramid = #{record.paramid,jdbcType=INTEGER},
+      pname = #{record.pname,jdbcType=VARCHAR},
+      pkey = #{record.pkey,jdbcType=CHAR},
+      pvalue = #{record.pvalue,jdbcType=VARCHAR},
+      meno = #{record.meno,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gduf.sbcms.entity.Params">
+    update params
+    <set>
+      <if test="pname != null">
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="pkey != null">
+        pkey = #{pkey,jdbcType=CHAR},
+      </if>
+      <if test="pvalue != null">
+        pvalue = #{pvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="meno != null">
+        meno = #{meno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where paramid = #{paramid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gduf.sbcms.entity.Params">
+    update params
+    set pname = #{pname,jdbcType=VARCHAR},
+      pkey = #{pkey,jdbcType=CHAR},
+      pvalue = #{pvalue,jdbcType=VARCHAR},
+      meno = #{meno,jdbcType=VARCHAR}
+    where paramid = #{paramid,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gduf.sbcms.dao.FeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.gduf.sbcms.entity.Feedback" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="feedback_status" property="feedbackStatus" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="feedback_type" property="feedbackType" jdbcType="VARCHAR" />
+    <result column="bicycle_id" property="bicycleId" jdbcType="INTEGER" />
+    <result column="damage_type" property="damageType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, content, feedback_status, user_id, feedback_type, bicycle_id, damage_type
+  </sql>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.gduf.sbcms.entity.Feedback" >
+    select 
+    <include refid="Base_Column_List" />
+    from feedback
+    where 1=1
+      <if test="id != null" >
+         and id =#{id,jdbcType=INTEGER}
+      </if>
+      <if test="content != null" >
+       and  content = #{content,jdbcType=VARCHAR}
+      </if>
+      <if test="feedbackStatus != null" >
+        and feedback_status = #{feedbackStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null">
+	and user_id =#{userId,jdbcType=INTEGER} 
+      </if>
+      <if test="feedbackType != null" >
+        and feedback_type =#{feedbackType,jdbcType=VARCHAR}
+      </if>
+      <if test="bicycleId != null" >
+        and bicycle_id =#{bicycleId,jdbcType=INTEGER}
+      </if>
+      <if test="damageType != null" >
+        and damage_type =#{damageType,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gduf.sbcms.entity.FeedbackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from feedback
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from feedback
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gduf.sbcms.entity.FeedbackExample" >
+    delete from feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gduf.sbcms.entity.Feedback" >
+    insert into feedback (id, content, feedback_status, 
+      user_id, feedback_type, bicycle_id, 
+      damage_type)
+    values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{feedbackStatus,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{feedbackType,jdbcType=VARCHAR}, #{bicycleId,jdbcType=INTEGER}, 
+      #{damageType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gduf.sbcms.entity.Feedback" >
+    insert into feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="feedbackStatus != null" >
+        feedback_status,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="feedbackType != null" >
+        feedback_type,
+      </if>
+      <if test="bicycleId != null" >
+        bicycle_id,
+      </if>
+      <if test="damageType != null" >
+        damage_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackStatus != null" >
+        #{feedbackStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="feedbackType != null" >
+        #{feedbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="bicycleId != null" >
+        #{bicycleId,jdbcType=INTEGER},
+      </if>
+      <if test="damageType != null" >
+        #{damageType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gduf.sbcms.entity.FeedbackExample" resultType="java.lang.Integer" >
+    select count(*) from feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update feedback
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackStatus != null" >
+        feedback_status = #{record.feedbackStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.feedbackType != null" >
+        feedback_type = #{record.feedbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bicycleId != null" >
+        bicycle_id = #{record.bicycleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.damageType != null" >
+        damage_type = #{record.damageType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update feedback
+    set id = #{record.id,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      feedback_status = #{record.feedbackStatus,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      feedback_type = #{record.feedbackType,jdbcType=VARCHAR},
+      bicycle_id = #{record.bicycleId,jdbcType=INTEGER},
+      damage_type = #{record.damageType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gduf.sbcms.entity.Feedback" >
+    update feedback
+    <set >
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackStatus != null" >
+        feedback_status = #{feedbackStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="feedbackType != null" >
+        feedback_type = #{feedbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="bicycleId != null" >
+        bicycle_id = #{bicycleId,jdbcType=INTEGER},
+      </if>
+      <if test="damageType != null" >
+        damage_type = #{damageType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gduf.sbcms.entity.Feedback" >
+    update feedback
+    set content = #{content,jdbcType=VARCHAR},
+      feedback_status = #{feedbackStatus,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      feedback_type = #{feedbackType,jdbcType=VARCHAR},
+      bicycle_id = #{bicycleId,jdbcType=INTEGER},
+      damage_type = #{damageType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

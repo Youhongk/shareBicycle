@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gduf.sbcms.dao.RidingMapper" >
+  <resultMap id="BaseResultMap" type="com.gduf.sbcms.entity.Riding" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="riding_status" property="ridingStatus" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="startTime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="length" property="length" jdbcType="DOUBLE" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, riding_status, user_id, startTime, length, endTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gduf.sbcms.entity.RidingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from riding
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from riding
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="com.gduf.sbcms.entity.Riding" >
+    select 
+    <include refid="Base_Column_List" />
+    from riding
+    where 1=1
+      <if test="id != null" >
+         and id =#{id,jdbcType=INTEGER}
+      </if>
+      <if test="ridingStatus != null" >
+       and  riding_status = #{ridingStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="starttime != null" >
+        and startTime =#{starttime,jdbcType=TIMESTAMP} 
+      </if>
+      <if test="length != null" >
+        and length =#{length,jdbcType=DOUBLE}
+      </if>
+      <if test="endtime != null" >
+        and endTime =#{endtime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from riding
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gduf.sbcms.entity.RidingExample" >
+    delete from riding
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gduf.sbcms.entity.Riding" >
+    insert into riding (id, riding_status, user_id, 
+      startTime, length, endTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{ridingStatus,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{length,jdbcType=DOUBLE}, #{endtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gduf.sbcms.entity.Riding" >
+    insert into riding
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ridingStatus != null" >
+        riding_status,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="starttime != null" >
+        startTime,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ridingStatus != null" >
+        #{ridingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gduf.sbcms.entity.RidingExample" resultType="java.lang.Integer" >
+    select count(*) from riding
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="countSign" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from riding
+    where user_id = #{userId,jdbcType=INTEGER} and riding_status = '1';
+  </select>
+  <select id="checkRiding" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from riding
+    where user_id = #{userId,jdbcType=INTEGER} and riding_status = '0';
+  </select>
+ 
+  <update id="updateByExampleSelective" parameterType="map" >
+    update riding
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ridingStatus != null" >
+        riding_status = #{record.ridingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.starttime != null" >
+        startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.length != null" >
+        length = #{record.length,jdbcType=DOUBLE},
+      </if>
+      <if test="record.endtime != null" >
+        endTime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update riding
+    set id = #{record.id,jdbcType=INTEGER},
+      riding_status = #{record.ridingStatus,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      startTime = #{record.starttime,jdbcType=TIMESTAMP},
+      length = #{record.length,jdbcType=DOUBLE},
+      endTime = #{record.endtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gduf.sbcms.entity.Riding" >
+    update riding
+    <set >
+      <if test="ridingStatus != null" >
+        riding_status = #{ridingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        startTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=DOUBLE},
+      </if>
+      <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gduf.sbcms.entity.Riding" >
+    update riding
+    set riding_status = #{ridingStatus,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
+      length = #{length,jdbcType=DOUBLE},
+      endTime = #{endtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
